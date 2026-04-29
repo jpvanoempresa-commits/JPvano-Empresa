@@ -40,13 +40,58 @@ npm run dev
 - `app/` - páginas do Next.js e dashboard
 - `components/` - interface do painel
 - `lib/` - clientes Supabase, Twilio, PDF e pagamentos
-- `app/api/whatsapp/webhook/route.ts` - webhook de mensagens
 - `supabase/schema.sql` - modelo de banco de dados
 
 ## Próximos passos
 
 - Configurar Supabase com as tabelas descritas em `supabase/schema.sql`
-- Conectar Twilio ao webhook público em `/api/whatsapp/webhook`
 - Implementar geração de PDF no backend ou no frontend
 - Integrar Stripe / Mercado Pago / Asaas para cobranças e assinaturas
 - Adicionar autenticação e controle de acesso por perfil
+
+## Deploy como site
+
+### Usando Vercel
+
+1. Instale o Vercel CLI (opcional):
+
+```bash
+npm i -g vercel
+```
+
+2. Faça login:
+
+```bash
+vercel login
+```
+
+3. Execute o deploy no diretório do projeto:
+
+```bash
+vercel
+```
+
+4. Para publicar em produção:
+
+```bash
+vercel --prod
+```
+
+5. Configure as variáveis de ambiente no painel do Vercel ou com o CLI:
+
+```bash
+vercel env add NEXT_PUBLIC_SUPABASE_URL production
+vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY production
+vercel env add NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY production
+vercel env add SUPABASE_SERVICE_ROLE_KEY production
+vercel env add TWILIO_AUTH_TOKEN production
+vercel env add TWILIO_WEBHOOK_TOKEN production
+vercel env add STRIPE_SECRET_KEY production
+vercel env add STRIPE_WEBHOOK_SECRET production
+```
+
+### Observações
+
+- O arquivo `vercel.json` já está configurado para deploy Next.js.
+- O `.vercelignore` evita envio do arquivo `.env` e pastas locais desnecessárias.
+- Se preferir outro host, o build padrão é `npm run build` e o start é `npm start`.
